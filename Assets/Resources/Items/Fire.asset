@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7c7d8600a2d6a849b3042bc4c5c93ba, type: 3}
-  m_Name: Pig
+  m_Name: Fire
   m_EditorClassIdentifier: 
-  value: 15
-  sprite: {fileID: 21300000, guid: f69c30589f911d341892910084b4c8f7, type: 3}
+  value: 7
+  sprite: {fileID: 21300000, guid: f82a19070437d664696e8420f0cc0102, type: 3}
