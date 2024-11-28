@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7c7d8600a2d6a849b3042bc4c5c93ba, type: 3}
-  m_Name: Monkey
+  m_Name: Light
   m_EditorClassIdentifier: 
   value: 10
-  sprite: {fileID: 21300000, guid: b2d7fc672eb3c294bb0251abcc632aff, type: 3}
+  sprite: {fileID: 21300000, guid: dddfc7659e4cddd49a62c2cb4c47b0fc, type: 3}

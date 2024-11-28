@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7c7d8600a2d6a849b3042bc4c5c93ba, type: 3}
-  m_Name: Giraffe
+  m_Name: Ice
   m_EditorClassIdentifier: 
   value: 10
-  sprite: {fileID: 21300000, guid: 85ef4649d07500a4f8c820635fdbf30d, type: 3}
+  sprite: {fileID: 21300000, guid: 6bf7630bc8021a541b4513077faeb793, type: 3}
