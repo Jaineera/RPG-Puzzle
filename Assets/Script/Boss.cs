@@ -1,40 +1,58 @@
+using TMPro;
 using UnityEngine;
-using TMPro;  // Import the TextMeshPro namespace
 
-public class BossHealth : MonoBehaviour
+public class Boss : MonoBehaviour
 {
-    public int maxHealth = 10000;  // The max health of the Boss
-    private int currentHealth;
+    [SerializeField] private float maxHealth = 100f; // Maximum health of the boss (adjustable in the Inspector)
+    private float currentHealth; // Current health of the boss
 
-    public TextMeshProUGUI healthText;  // Reference to the TextMeshPro UI element for health display
+    public TextMeshProUGUI BossHealthTet;  // TextMeshPro component for displaying boss health
 
-    void Start()
+    private void Awake()
     {
-        currentHealth = maxHealth;  // Initialize Boss health to max
-        UpdateHealthText();  // Display initial health
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-
-        // Prevent health from going below 0
-        if (currentHealth < 0)
-            currentHealth = 0;
-
-        UpdateHealthText();  // Update the health UI text after taking damage
-
-        if (currentHealth <= 0)
+        if (maxHealth <= 0)
         {
-            Debug.Log("Boss defeated!");
-            // Additional logic for when the Boss is defeated, e.g., triggering an animation or game event
+            Debug.LogWarning("Max Health is set to 0 or less. Defaulting to 100.");
+            maxHealth = 100f; // Default to 100 if an invalid value is set
         }
     }
 
-    // Updates the health text on the UI
-    private void UpdateHealthText()
+    private void Start()
     {
-        // Update the HealthText UI element with the current health of the Boss
-        healthText.SetText($"Boss Health: {currentHealth}");
+        currentHealth = maxHealth;
+        UpdateBossHealthUI();  // Update the health display
+    }
+
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        UpdateBossHealthUI();
+    }
+
+    // Add ResetHealth method to reset the boss's health
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth; // Reset health to maximum
+        UpdateBossHealthUI(); // Update the UI after resetting
+    }
+
+    private void UpdateBossHealthUI()
+    {
+        if (BossHealthTet != null)
+        {
+            BossHealthTet.text = $"Boss Health: {currentHealth}";
+        }
+        else
+        {
+            Debug.LogWarning("Boss Health Text is not assigned! Please assign it in the Inspector.");
+        }
+    }
+
+    public void SetMaxHealth(float health)
+    {
+        maxHealth = health;
+        currentHealth = maxHealth;
+        UpdateBossHealthUI(); // Update UI after setting new max health
     }
 }

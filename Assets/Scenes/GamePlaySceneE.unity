@@ -555,7 +555,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1312926409}
   gameOptionsPanel: {fileID: 1312926409}
   healthDecayText: {fileID: 1192044087}
-  maxHealth: 50
+  maxHealth: 10
   healthDecaySpeed: 1
   scoreCounter: {fileID: 848008000}
   boss: {fileID: 301244900}
@@ -2243,7 +2243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TestTestTest
+  m_text: TetTestTest
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

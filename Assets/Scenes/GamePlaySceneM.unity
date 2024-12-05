@@ -555,7 +555,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1312926409}
   gameOptionsPanel: {fileID: 1312926409}
   healthDecayText: {fileID: 1192044087}
-  maxHealth: 50
+  maxHealth: 15
   healthDecaySpeed: 1
   scoreCounter: {fileID: 848008000}
   boss: {fileID: 301244900}
@@ -753,7 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8bf86b993d816144a9a9750c0fab447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 400
+  maxHealth: 500
   BossHealthTet: {fileID: 1968383858}
 --- !u!4 &301244901
 Transform:
@@ -2243,7 +2243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TestTestTest
+  m_text: Hero Health:0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

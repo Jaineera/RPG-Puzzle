@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Hero
   - Boss
+  - BossUI
+  - ChargeUI
+  - ButtonUI
   layers:
   - Default
   - TransparentFX

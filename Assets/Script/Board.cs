@@ -1,38 +1,37 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
+using TMPro;
+using DG.Tweening;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-public sealed class Board : MonoBehaviour
+public class Board : MonoBehaviour
 {
-    public static Board Instance{ get; private set; }
+    public static Board Instance { get; private set; }
 
     [SerializeField] private AudioClip collectSound;
-
     [SerializeField] private AudioSource audioSource;
-
     public Row[] rows;
-
-    public Tile[,] Tiles{ get; private set; }
-
+    public Tile[,] Tiles { get; private set; }
 
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);
 
-    private readonly List<Tile> _selection =  new List<Tile>();
+    private readonly List<Tile> _selection = new List<Tile>();
 
     private const float TweenDuration = 0.25f;
 
     private void Awake() => Instance = this;
 
-    private void Start(){
-        Tiles = new Tile[rows.Max(selector:row => row.tiles.Length), rows.Length];
+    private void Start()
+    {
+        Tiles = new Tile[rows.Max(row => row.tiles.Length), rows.Length];
 
-        for (var y = 0; y < Height; y++){
-            for(var x = 0; x < Width; x++){
-
+        for (var y = 0; y < Height; y++)
+        {
+            for (var x = 0; x < Width; x++)
+            {
                 var tile = rows[y].tiles[x];
 
                 tile.x = x;
@@ -40,20 +39,20 @@ public sealed class Board : MonoBehaviour
 
                 tile.Item = ItemDatabase.Items[UnityEngine.Random.Range(0, ItemDatabase.Items.Length)];
 
-                Tiles[x,y] = tile;
+                Tiles[x, y] = tile;
             }
         }
 
         Pop();
     }
 
-    public async void Select(Tile tile){
-
+    public async void Select(Tile tile)
+    {
         if (!_selection.Contains(tile)) _selection.Add(tile);
 
-        if (_selection.Count <2) return;
+        if (_selection.Count < 2) return;
 
-        Debug.Log(message:$"Selected tiles at ({_selection[0].x} , {_selection[0].y} ) and {_selection[1].x} , {_selection[1].y}");
+        Debug.Log($"Selected tiles at ({_selection[0].x}, {_selection[0].y}) and ({_selection[1].x}, {_selection[1].y})");
 
         await Swap(_selection[0], _selection[1]);
 
@@ -69,8 +68,8 @@ public sealed class Board : MonoBehaviour
         _selection.Clear();
     }
 
-    public async Task Swap(Tile tile1, Tile tile2){
-
+    public async Task Swap(Tile tile1, Tile tile2)
+    {
         var icon1 = tile1.icon;
         var icon2 = tile2.icon;
 
@@ -82,7 +81,6 @@ public sealed class Board : MonoBehaviour
         sequence.Join(icon1Transform.DOMove(icon2Transform.position, TweenDuration))
                 .Join(icon2Transform.DOMove(icon1Transform.position, TweenDuration));
 
-
         await sequence.Play().AsyncWaitForCompletion();
 
         icon1Transform.SetParent(tile2.transform);
@@ -91,15 +89,15 @@ public sealed class Board : MonoBehaviour
         tile1.icon = icon2;
         tile2.icon = icon1;
 
-        var tile1item = tile1.Item;
+        var tile1Item = tile1.Item;
 
         tile1.Item = tile2.Item;
-        tile2.Item = tile1item;
+        tile2.Item = tile1Item;
     }
 
-    private bool CanPop() //check if can pop
+    private bool CanPop()
     {
-        for(var y = 0; y < Height; y++)
+        for (var y = 0; y < Height; y++)
         {
             for (var x = 0; x < Width; x++)
             {
@@ -110,26 +108,26 @@ public sealed class Board : MonoBehaviour
         return false;
     }
 
-    private async void Pop() //Pop mechanics
+    private async void Pop()
     {
         for (var y = 0; y < Height; ++y)
         {
-
             for (var x = 0; x < Width; ++x)
             {
                 var tile = Tiles[x, y];
-
                 var connectedTiles = tile.GetConnectedTiles();
 
                 if (connectedTiles.Skip(1).Count() < 2) continue;
 
                 var deflateSequence = DOTween.Sequence();
 
-                foreach (var connectedTile in connectedTiles) deflateSequence.Join(connectedTile.icon.transform.DOScale(Vector3.zero, TweenDuration));
+                foreach (var connectedTile in connectedTiles)
+                    deflateSequence.Join(connectedTile.icon.transform.DOScale(Vector3.zero, TweenDuration));
 
                 audioSource.PlayOneShot(collectSound);
 
-                ScoreCounter.Instance.Score += tile.Item.value * connectedTiles.Count;
+                // Accumulate score using AddScore
+                ScoreCounter.Instance.AddScore(tile.Item.value * connectedTiles.Count);
 
                 await deflateSequence.Play().AsyncWaitForCompletion();
 
@@ -138,7 +136,6 @@ public sealed class Board : MonoBehaviour
                 foreach (var connectedTile in connectedTiles)
                 {
                     connectedTile.Item = ItemDatabase.Items[UnityEngine.Random.Range(0, ItemDatabase.Items.Length)];
-
                     inflateSequence.Join(connectedTile.icon.transform.DOScale(Vector3.one, TweenDuration));
                 }
 
